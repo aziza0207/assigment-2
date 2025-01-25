@@ -15,6 +15,7 @@ from .permissions import IsDoctorPermission
 
 User = get_user_model()
 
+
 @extend_schema(tags=["User"])
 class UserViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
@@ -74,14 +75,3 @@ class PatientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def get_queryset(self):
         return Patient.objects.all().select_related("user")
-
-
-
-
-
-
-
-
-
-
-

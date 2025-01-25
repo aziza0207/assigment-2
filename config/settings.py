@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import datetime
 import os
 from pathlib import Path
+from sys import argv
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -28,9 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+TESTING = "test" in argv or len(argv) >= 1 and "pytest" in argv[0]
+DEBUG = os.environ.get("DEBUG", "True") == "True" and not TESTING
+# DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

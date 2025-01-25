@@ -22,8 +22,13 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 email=DEFAULT_ADMIN_EMAIL,
                 password=DEFAULT_ADMIN_PASSWORD,
-
             )
-            self.stdout.write(self.style.SUCCESS(f"Admin user '{DEFAULT_ADMIN_EMAIL}' created."))
+            self.stdout.write(
+                self.style.SUCCESS(f"Admin user '{DEFAULT_ADMIN_EMAIL}' created.")
+            )
         else:
-            self.stdout.write(self.style.WARNING(f"Admin user '{DEFAULT_ADMIN_EMAIL}' already exists."))
+            self.stdout.write(
+                self.style.WARNING(
+                    f"Admin user '{DEFAULT_ADMIN_EMAIL}' already exists."
+                )
+            )
