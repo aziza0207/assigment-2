@@ -8,26 +8,24 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 
-from .serializers import UserRegisterSerializer, UserLoginSerializer
+from .models import Patient
 
+from .serializers import UserRegisterSerializer, UserLoginSerializer, PatientSerializer
+from .permissions import IsDoctorPermission
 
 User = get_user_model()
 
 @extend_schema(tags=["User"])
-class UserViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class UserViewSet(viewsets.GenericViewSet):
+    queryset = User.objects.all()
 
     def get_serializer_class(self):
+
         if self.action == self.register.__name__:
             return UserRegisterSerializer
+
         if self.action == self.login.__name__:
             return UserLoginSerializer
-
-
-    def get_queryset(self):
-        queryset = User.objects.all()
-        if self.action == self.list.__name__:
-            queryset = queryset
-        return queryset
 
     @action(detail=False, methods=["POST"])
     def register(self, request, *args, **kwargs):
@@ -67,6 +65,20 @@ class UserViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
             return Response(data, status=status.HTTP_200_OK)
         else:
             raise AuthenticationFailed("Invalid credentials")
+
+
+@extend_schema(tags=["Patient"])
+class PatientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    serializer_class = PatientSerializer
+    permission_classes = (IsDoctorPermission,)
+
+    def get_queryset(self):
+        return Patient.objects.all().select_related("user")
+
+
+
+
+
 
 
 
