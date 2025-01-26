@@ -39,8 +39,8 @@ chmod +x /entrypoint.sh
 ```  
 ### После разворота
 
-Swagger - http://0.0.0.0/api/docs/
+Swagger - http://0.0.0.0:1337/api/docs/
 
 Пароль для входа можно взять из .env
 
-Admin - http://0.0.0.0/admin/ 
+Admin - http://0.0.0.0:1337/admin/ 
