@@ -46,7 +46,6 @@ Swagger - http://0.0.0.0:1337/api/docs/
 Admin - http://0.0.0.0:1337/admin/ 
 
 
-
 ### Локальный запуск приложения без докер. 
 Проект использует следующие внешние зависимости:
 - **PostgreSQL**: Реляционная база данных.
@@ -85,10 +84,7 @@ python manage.py migrate
 ```shell
 python manage.py create_default_admin
 ```
-для заполнения базы странами
-```shell
-python manage.py fetch_countries
-```
+
 для запуска приложения
 ```shell
 python manage.py runserver
