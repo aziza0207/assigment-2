@@ -31,9 +31,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 TESTING = "test" in argv or len(argv) >= 1 and "pytest" in argv[0]
 DEBUG = os.environ.get("DEBUG", "True") == "True" and not TESTING
-# DEBUG = os.environ.get("DEBUG")
+
+
 
 ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS =  os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
 
 
 # Application definition
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
@@ -55,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -173,7 +178,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
